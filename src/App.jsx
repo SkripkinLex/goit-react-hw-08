@@ -7,7 +7,7 @@ import Navigation from "./components/Navigation/Navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { selectAuthIsRefreshing } from "./redux/auth/selectors";
 import { useEffect } from "react";
-import { apiIsRefreshing } from "./redux/auth/operation";
+import { apiIsRefreshing } from "./redux/auth/operations";
 // import { lazy } from "react";
 
 // const MyComponent = lazy(() => import("path/to/MyComponent"));

@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 
 import css from "./RegistrationForm.module.css";
-import { apiRegister } from "../../redux/auth/operation";
+import { apiRegister } from "../../redux/auth/operations";
 import { selectAuthError, selectAuthLoading } from "../../redux/auth/selectors";
 import Loader from "../Loader/Loader";
 
