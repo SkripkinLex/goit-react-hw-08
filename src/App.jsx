@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectAuthIsRefreshing } from "./redux/auth/selectors";
 import { useEffect } from "react";
 import { apiIsRefreshing } from "./redux/auth/operations";
+import Layout from "./components/Layout/Layout";
 // import { lazy } from "react";
 
 // const MyComponent = lazy(() => import("path/to/MyComponent"));
@@ -33,12 +34,26 @@ function App() {
     <>
       <Navigation />
       <main>
-        <Routes>
-          <Route path="/" element={<HomePage />}></Route>
-          <Route path="/register" element={<RegistrationPage />}></Route>
-          <Route path="/login" element={<LoginPage />}></Route>
-          <Route path="/contacts" element={<ContactsPage />}></Route>
-        </Routes>
+        <Layout>
+          <Routes>
+          <Route path="/" element={<HomePage />} />
+
+<Route
+  path="/contacts"
+  element={<PrivateRoute component={<ContactsPage />} />}
+/>
+
+<Route
+  path="/login"
+  element={<RestrictedRoute component={<LoginPage />} />}
+/>
+<Route
+  path="/register"
+  element={<RestrictedRoute component={<RegistrationPage />} />}
+/>
+<Route path="*" element={<NotFound />} />
+          </Routes>
+        </Layout>  
       </main>
     </>
   );
