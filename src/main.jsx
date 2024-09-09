@@ -9,14 +9,14 @@ import "normalize.css";
 import "./index.css";
 import { PersistGate } from "redux-persist/integration/react";
 
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <Provider store={store}>
-        <PersistGate persistor={persister}>
+ReactDOM.createRoot(document.getElementById('root')).render(
+  // <React.StrictMode>
+    <Provider store={store}>
+      <BrowserRouter>
+        <PersistGate persistor={persistor}>
           <App />
         </PersistGate>
-      </Provider>
-    </BrowserRouter>
-  </React.StrictMode>
+      </BrowserRouter>
+    </Provider>
+  // </React.StrictMode>
 );
