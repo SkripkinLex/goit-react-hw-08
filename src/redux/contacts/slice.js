@@ -1,19 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {
-  apiIsRefreshing,
-  apiLogin,
-  apiLogout,
-  apiRegister,
-} from "./operations";
+import { addContact, deleteContact, fetchContacts } from "./operations";
+import { apiLogout } from "../auth/operations";
 
 const INITIAL_STATE = {
-  user: {
-    name: null,
-    email: null,
-  },
-  token: null,
-  isLoggedIn: false,
-  isRefreshing: false,
+  items: [],
   loading: false,
   error: null,
 };
@@ -27,61 +17,42 @@ const handleRejected = (state, action) => {
   state.error = action.payload;
 };
 
-const authSlice = createSlice({
-  name: "auth",
+const contactsSlice = createSlice({
+  name: "contacts",
   initialState: INITIAL_STATE,
   extraReducers: (builder) => {
     builder
-      .addCase(apiRegister.pending, handlePending)
-      .addCase(apiRegister.fulfilled, (state, action) => {
+      .addCase(fetchContacts.pending, handlePending)
+      .addCase(fetchContacts.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        state.isLoggedIn = true;
-        state.token = action.payload.token;
-        state.user = action.payload.user;
+        state.items = action.payload;
       })
-      .addCase(apiRegister.rejected, handleRejected)
+      .addCase(fetchContacts.rejected, handleRejected)
 
-      .addCase(apiLogin.pending, handlePending)
-      .addCase(apiLogin.fulfilled, (state, action) => {
+      .addCase(addContact.pending, handlePending)
+      .addCase(addContact.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        state.isLoggedIn = true;
-        state.token = action.payload.token;
-        state.user = action.payload.user;
+        state.items.push(action.payload);
       })
-      .addCase(apiLogin.rejected, handleRejected)
+      .addCase(addContact.rejected, handleRejected)
 
-      .addCase(apiIsRefreshing.pending, (state) => {
-        state.error = null;
-        state.isRefreshing = true;
-      })
-      .addCase(apiIsRefreshing.fulfilled, (state, action) => {
+      .addCase(deleteContact.pending, handlePending)
+      .addCase(deleteContact.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        state.isLoggedIn = true;
-        state.user = action.payload;
-        state.isRefreshing = false;
+        state.items = state.items.filter(
+          (item) => item.id !== action.payload.id
+        );
       })
-      .addCase(apiIsRefreshing.rejected, (state, action) => {
-        state.error = action.payload;
-        state.isRefreshing = false;
-      })
+      .addCase(deleteContact.rejected, handleRejected)
 
-      .addCase(apiLogout.pending, handlePending)
       .addCase(apiLogout.fulfilled, (state) => {
-        state.user = {
-          name: null,
-          email: null,
-        };
-        state.token = null;
-        state.isLoggedIn = false;
-        state.isRefreshing = false;
-        state.loading = false;
+        state.items = [];
         state.error = null;
-      })
-      .addCase(apiLogout.rejected, handleRejected);
+        state.isLoading = false;
+      });
   },
 });
-
-export const authReducer = authSlice.reducer;
+export const contactsReducer = contactsSlice.reducer;

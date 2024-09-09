@@ -1,10 +1,10 @@
-import AppBar from '../AppBar/AppBar';
+import AppBar from "../AppBar/AppBar";
 
-const Layout = ({children}) => {
+const Layout = ({ children }) => {
   return (
     <>
       <AppBar />
-      {children}
+      <main>{children}</main>
     </>
   );
 };

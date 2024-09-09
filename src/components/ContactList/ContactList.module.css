@@ -1,20 +1,28 @@
 .contactList {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-  
-  .contactItem {
-    border: 2px solid black;
-    padding: 8px;
-    display: flex;
-    max-width: 280px;
-    width: 100%;
-    border-radius: 8px;
-    justify-content: space-between;
-  }
-  
-  .btn {
-    margin-top: auto;
-    margin-bottom: auto;
-  }
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.contactItem {
+  border: 2px solid black;
+  padding: 8px;
+  display: flex;
+  max-width: 280px;
+  width: 100%;
+  border-radius: 8px;
+  justify-content: space-between;
+}
+
+.btn {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.text {
+  font-size: 20px;
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  font-weight: 600;
+}
