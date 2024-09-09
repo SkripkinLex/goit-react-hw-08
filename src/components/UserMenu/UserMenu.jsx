@@ -1,25 +1,41 @@
-import css from './UserMenu.module.css'
-import { useDispatch, useSelector } from 'react-redux';
-import { selectAuthUser } from '../../redux/auth/selectors';
-import { logout } from '../../redux/auth/operations';
+import { useDispatch, useSelector } from "react-redux";
+import { apiLogout } from "../../redux/auth/operations";
+import { selectAuthUser } from "../../redux/auth/selectors";
+import { NavLink } from "react-router-dom";
+import clsx from "clsx";
 
+import css from "../AppBar/AppBar.module.css";
+import style from "./UserMenu.module.css";
 
 const UserMenu = () => {
+  const dispatch = useDispatch();
 
-  const dispatch = useDispatch()
+  const onLogout = () => {
+    dispatch(apiLogout());
+  };
+
   const user = useSelector(selectAuthUser);
-  // console.log(user.name);
-
-  const handleClick = () => {
-    dispatch(logout());   
-  }
 
   return (
-    <div className={css.menu}>
-      <p className={css.userInfo}>{user.email}</p>
-      <button onClick={handleClick} className={css.button}>Log Out</button>
+    <div className={style.box}>
+      <NavLink
+        className={({ isActive }) => clsx(css.link, isActive && css.active)}
+        to="/contacts"
+      >
+        Contacts
+      </NavLink>
+      <div className={style.textUser}>
+        <p>
+          Hello <span className={style.span}>{user.name}</span>
+        </p>
+        <p>
+          Email: <span className={style.span}>{user.email}</span>
+        </p>
+      </div>
+      <button className={style.btn} type="button" onClick={onLogout}>
+        Logout
+      </button>
     </div>
   );
 };
-
 export default UserMenu;
